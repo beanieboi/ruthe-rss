@@ -3,8 +3,8 @@
 require 'rss/maker'
 
 version = "2.0" # ["0.9", "1.0", "2.0"]
-destination = "~/public_html/ruthe.xml" # local file to write
-stats_file = "~/skripte/ruthe/ruthe_bilder.txt"
+destination = "./ruthe.xml" # local file to write
+stats_file = "./ruthe_bilder.txt"
 
 content = RSS::Maker.make(version) do |m|
   m.channel.title = "Ruthe Bilder"
@@ -23,7 +23,7 @@ content = RSS::Maker.make(version) do |m|
     i.title = "Ruthe #{cartoon_number}"
     i.link = "http://www.ruthe.de/"
     i.date = Time.at(time)
-    i.content_encoded = "<img src='http://ruthe.de/frontend/cartoons/strip_#{cartoon_number}.jpg'>";
+    i.content_encoded = "<img src='http://ruthe.de/cartoons/strip_#{cartoon_number}.jpg'>";
   end
 end
 
