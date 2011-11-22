@@ -17,7 +17,9 @@ class RutheCartoon
 
   def write
     line = "#{Time.now.tv_sec}|#{id}\n"
-    File.open(@stats_file, 'a') { |f| f.write(line) }
+    last_line = last = File.open(@stats_file) { |f| f.extend(Enumerable).inject { |_,ln| ln } }
+    last_number = last_line.split("|").last.to_i
+    File.open(@stats_file, 'a') { |f| f.write(line) } if id != last_number
   end
 
   def url
