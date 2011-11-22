@@ -1,19 +1,33 @@
 #!/usr/bin/env ruby
 
 require 'rubygems'
-require 'hpricot'
+require 'nokogiri'
 require 'open-uri'
 
-stats_file = "~/skripte/ruthe/ruthe_bilder.txt"
+class RutheCartoon
+  attr_reader :stats_file
 
-doc = Hpricot(URI.parse("http://ruthe.de/frontend/index.php").read)
+  def initialize
+    @stats_file = "./ruthe_bilder.txt"
+  end
 
-cartoon_url = doc.search("//img[@alt='Cartoon']").first.attributes['src']
-cartoon_number = cartoon_url.split(".").first.split("_").last.to_i
+  def id
+    url.split(".").first.split("_").last.to_i
+  end
 
-line = "#{Time.now.tv_sec}|#{cartoon_number}\n"
+  def write
+    line = "#{Time.now.tv_sec}|#{id}\n"
+    File.open(@stats_file, 'a') { |f| f.write(line) }
+  end
 
-last_line = `tail -n 1 #{stats_file}`
-last_number = last_line.split("|").last.to_i
+  def url
+    @url ||= doc.xpath("//img[@alt='Cartoon']").first.attributes['src'].value
+  end
 
-File.open(stats_file, 'a') { |f| f.write(line) } if cartoon_number != last_number
+  def doc
+    @doc ||= Nokogiri::HTML(open("http://ruthe.de/"))
+  end
+end
+
+rc = RutheCartoon.new
+rc.write
