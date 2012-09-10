@@ -5,6 +5,7 @@ require 'rss/maker'
 version = "2.0" # ["0.9", "1.0", "2.0"]
 destination = "./ruthe.xml" # local file to write
 stats_file = "./ruthe_bilder.txt"
+fetch = false
 
 if ARGV.include?('-o')
   destination = ARGV[ARGV.index('-o') + 1]
@@ -12,11 +13,20 @@ if ARGV.include?('-o')
   ARGV.delete(destination)
 end
 
+if ARGV.include?('-f')
+  fetch = true
+  ARGV.delete('-f')
+end
+
 content = RSS::Maker.make(version) do |m|
   m.channel.title = "Ruthe Bilder"
   m.channel.link = "http://www.ruthe.de"
   m.channel.description = "Ruthe Cartoon"
   m.items.do_sort = true # sort items by date
+
+  if fetch == true
+    require File.join(File.dirname(__FILE__), "ruthe")
+  end
 
   file = File.open(stats_file)
   bilder = file.readlines
