@@ -6,6 +6,12 @@ version = "2.0" # ["0.9", "1.0", "2.0"]
 destination = "./ruthe.xml" # local file to write
 stats_file = "./ruthe_bilder.txt"
 
+if ARGV.include?('-o')
+  destination = ARGV[ARGV.index('-o') + 1]
+  ARGV.delete('-o')
+  ARGV.delete(destination)
+end
+
 content = RSS::Maker.make(version) do |m|
   m.channel.title = "Ruthe Bilder"
   m.channel.link = "http://www.ruthe.de"
