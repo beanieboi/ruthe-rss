@@ -51,7 +51,7 @@ Liferea 1.8. Adapt version number in paths as necessary.
 
     mkdir ~/.liferea_1.8/scripts
     cd ~/.liferea_1.8/scripts
-    git clone git://github.com/xtaran/ruthe-rss.git
+    git clone git://github.com/beanieboi/ruthe-rss.git
 
 Then create a new subscription in Liferea with the source type "command". Enter
 
