@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'rubygems'
 require 'nokogiri'
-require 'open-uri'
 
 class RutheCartoon
   attr_reader :stats_file
