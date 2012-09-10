@@ -33,6 +33,10 @@ content = RSS::Maker.make(version) do |m|
   end
 end
 
-File.open(destination,"w") do |f|
-  f.write(content)
+if destination == '-'
+  print content
+else
+  File.open(destination,"w") do |f|
+    f.write(content)
+  end
 end
